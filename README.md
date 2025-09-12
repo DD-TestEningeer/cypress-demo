@@ -1,4 +1,4 @@
-# 📘 Cypress Training – Session 1
+# 📘 Cypress Training - Part 1
 
 **Topic:** Introduction & Setup
 
@@ -163,7 +163,7 @@ describe('My First Cypress Test', () => {
 ✅ **Deliverable:** Push your Cypress project to GitHub with the new test file in the `cypress/e2e` folder.
 
 
-# 📘 Cypress Training – Session 2
+# 📘 Cypress Training – Part 2
 
 **Topic:** Cypress Architecture & Folder Structure
 
