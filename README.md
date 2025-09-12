@@ -635,3 +635,243 @@ describe('Login Form Test', () => {
 ---
 
 
+# 📘 Cypress Training – Part 4
+
+**Topic:** Locators & Web Element Interactions
+
+---
+
+## 🎯 Learning Objectives
+
+By the end of this session, learners will be able to:
+
+* Use different locator strategies to find elements in Cypress.
+* Understand the difference between `cy.get()` and `cy.find()`.
+* Interact with web elements like text fields, buttons, checkboxes, radio buttons, and dropdowns.
+* Perform navigation actions in Cypress.
+* Combine locators and interactions to build functional test cases.
+
+---
+
+## 📝 Agenda
+
+1. Locators in Cypress
+2. `cy.get()` vs `cy.find()`
+3. Web Element Interactions (input, click, checkbox, dropdown)
+4. Navigation Commands (`cy.go()`, `cy.reload()`)
+5. Hands-on Demos
+6. Assignment
+
+---
+
+## 1. 🔹 Locators in Cypress
+
+### Common Locator Strategies
+
+| Locator Type       | Example Usage                   | Syntax                              |
+| ------------------ | ------------------------------- | ----------------------------------- |
+| **CSS Selector**   | Select by class, id, or element | `cy.get('.class')`, `cy.get('#id')` |
+| **Data Attribute** | Preferred for test automation   | `cy.get('[data-cy="login-btn"]')`   |
+| **Text Content**   | Select by visible text          | `cy.contains('Submit')`             |
+| **Tag Name**       | Select by HTML tag              | `cy.get('button')`                  |
+| **Chaining**       | Narrow selection                | `cy.get('.form').find('input')`     |
+| **Positioning**    | Select by index                 | `cy.get('li').eq(0)`                |
+| **Filtering**      | Apply filters                   | `cy.get('div').filter('.active')`   |
+
+👉 Cypress doesn’t support XPath by default. To use it, install the plugin:
+
+```bash
+npm install -D cypress-xpath
+```
+
+Then in `cypress/support/e2e.js`:
+
+```javascript
+require('cypress-xpath');
+```
+
+Usage:
+
+```javascript
+cy.xpath('//button[@id="submit"]')
+```
+
+---
+
+## 2. 🔹 `cy.get()` vs `cy.find()`
+
+* `cy.get()` → Finds elements globally in the DOM.
+* `cy.find()` → Finds elements **within a specific parent element**.
+
+### ✅ Example
+
+```javascript
+// Using cy.get() - finds input globally
+cy.get('input[type="text"]').type('Hello')
+
+// Using cy.find() - finds input only inside the form
+cy.get('form').find('input[type="text"]').type('Hello')
+```
+
+---
+
+## 3. 🔹 Web Element Interactions
+
+### a) Typing in Input Boxes
+
+```javascript
+cy.get('#username').type('testUser')
+```
+
+### b) Clicking Buttons
+
+```javascript
+cy.get('#loginBtn').click()
+```
+
+### c) Checking & Unchecking Checkboxes
+
+```javascript
+// Check a checkbox
+cy.get('#agree').check()
+
+// Uncheck a checkbox
+cy.get('#agree').uncheck()
+```
+
+### d) Selecting Radio Buttons
+
+```javascript
+cy.get('input[type="radio"][value="male"]').check()
+```
+
+### e) Handling Dropdowns (Static `<select>`)
+
+```javascript
+// Select by visible text
+cy.get('select#country').select('India')
+
+// Select by value
+cy.get('select#country').select('IN')
+
+// Select by index
+cy.get('select#country').select(1)
+```
+
+---
+
+## 4. 🔹 Navigation Commands
+
+* Go back in browser history
+
+```javascript
+cy.go('back')
+```
+
+* Go forward in browser history
+
+```javascript
+cy.go('forward')
+```
+
+* Reload current page
+
+```javascript
+cy.reload()
+```
+
+---
+
+## 5. 🖥️ Hands-on Demos
+
+### Demo 1 – Automate a Login Form
+
+```javascript
+describe('Login Form Test', () => {
+  it('should login with valid credentials', () => {
+    cy.visit('https://example.cypress.io/commands/actions')
+
+    // Type into input fields
+    cy.get('.action-email').type('test@example.com')
+    cy.get('.action-password').type('Password123')
+
+    // Click login button
+    cy.contains('Submit').click()
+  })
+})
+```
+
+---
+
+### Demo 2 – Dropdown Selection
+
+```javascript
+describe('Dropdown Test', () => {
+  it('should select an option from dropdown', () => {
+    cy.visit('https://example.cypress.io/commands/actions')
+
+    cy.get('select#dropdown')
+      .select('Option 2')
+      .should('have.value', 'option2')
+  })
+})
+```
+
+---
+
+### Demo 3 – Checkboxes & Radio Buttons
+
+```javascript
+describe('Checkbox and Radio Test', () => {
+  it('should check and uncheck checkboxes', () => {
+    cy.visit('https://example.cypress.io/commands/actions')
+
+    // Check a box
+    cy.get('#checkbox1').check().should('be.checked')
+
+    // Uncheck it
+    cy.get('#checkbox1').uncheck().should('not.be.checked')
+  })
+
+  it('should select a radio button', () => {
+    cy.get('input[type="radio"][value="female"]').check().should('be.checked')
+  })
+})
+```
+
+---
+
+### Demo 4 – Navigation
+
+```javascript
+describe('Navigation Test', () => {
+  it('should navigate back and forward', () => {
+    cy.visit('https://example.cypress.io')
+
+    cy.contains('Commands').click()
+    cy.go('back')
+    cy.go('forward')
+    cy.reload()
+  })
+})
+```
+
+---
+
+## 6. 📚 Assignment
+
+1. Visit [https://example.cypress.io/commands/actions](https://example.cypress.io/commands/actions).
+2. Automate the following steps:
+
+   * Enter text in an input field.
+   * Select an option from a dropdown.
+   * Check a checkbox and validate it.
+   * Select a radio button and validate it.
+3. Use `.find()` to select an input inside a specific form.
+4. Use `cy.reload()` after form submission.
+
+✅ **Deliverable:** Push your Cypress test suite `formInteractions.cy.js` to your GitHub repo.
+
+---
+
+
