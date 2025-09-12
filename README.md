@@ -386,3 +386,252 @@ describe('Config Demo', () => {
 ---
 
 
+# 📘 Cypress Training – Part 3
+
+**Topic:** Writing Tests with Mocha & Chai
+
+*Doc Link* - https://docs.cypress.io/app/references/bundled-libraries
+
+---
+
+## 🎯 Learning Objectives
+
+By the end of this session, learners will be able to:
+
+* Understand the **Mocha test framework** used in Cypress.
+* Use Mocha hooks (`before`, `after`, `beforeEach`, `afterEach`).
+* Write test suites and test cases with `describe()` and `it()`.
+* Apply **Chai assertions** (`should`, `expect`, `assert`).
+* Understand implicit vs explicit assertions.
+* Write Cypress tests combining Mocha + Chai.
+
+---
+
+## 📝 Agenda
+
+1. Introduction to Mocha in Cypress
+2. Test Structure: `describe()`, `it()`
+3. Mocha Hooks (`before`, `after`, `beforeEach`, `afterEach`)
+4. Selective Test Execution (`.only`, `.skip`)
+5. Introduction to Chai Assertions
+6. Implicit vs Explicit Assertions
+7. Hands-on Demo: Writing Tests with Assertions
+8. Assignment
+
+---
+
+## 1. 🔹 Introduction to Mocha in Cypress
+
+* Cypress uses **Mocha** as its default testing framework.
+* Mocha provides a clean structure for writing test suites and test cases.
+* Supports synchronous and asynchronous testing.
+* Provides hooks for pre- and post-test actions.
+
+---
+
+## 2. 🔹 Test Structure: `describe()` and `it()`
+
+### `describe()` – Test Suite
+
+* Groups related test cases together.
+* Takes 2 arguments:
+
+  1. Test suite name (string).
+  2. Callback function containing tests.
+
+### `it()` – Test Case
+
+* Represents a single test.
+* Takes 2 arguments:
+
+  1. Test case name (string).
+  2. Callback function with test logic.
+
+### ✅ Example
+
+```javascript
+describe('Login Page Tests', () => {
+  it('should load the login page', () => {
+    cy.visit('https://example.cypress.io')
+    cy.contains('Commands').should('be.visible')
+  })
+
+  it('should have a valid title', () => {
+    cy.title().should('include', 'Cypress')
+  })
+})
+```
+
+---
+
+## 3. 🔹 Mocha Hooks
+
+Hooks help run setup or cleanup code around test execution.
+
+* `before()` → Runs once before all tests in a suite.
+* `after()` → Runs once after all tests in a suite.
+* `beforeEach()` → Runs before each test case.
+* `afterEach()` → Runs after each test case.
+
+### ✅ Example
+
+```javascript
+describe('Mocha Hooks Example', () => {
+  before(() => {
+    cy.log('Run once before all tests')
+  })
+
+  after(() => {
+    cy.log('Run once after all tests')
+  })
+
+  beforeEach(() => {
+    cy.log('Run before each test')
+  })
+
+  afterEach(() => {
+    cy.log('Run after each test')
+  })
+
+  it('Test 1', () => {
+    cy.log('Executing Test 1')
+  })
+
+  it('Test 2', () => {
+    cy.log('Executing Test 2')
+  })
+})
+```
+
+---
+
+## 4. 🔹 Selective Test Execution
+
+* Run only specific tests using `.only`.
+* Skip tests using `.skip`.
+
+### ✅ Example
+
+```javascript
+describe('Selective Test Execution', () => {
+  it.only('This test will run', () => {
+    cy.log('Running only this test')
+  })
+
+  it.skip('This test will be skipped', () => {
+    cy.log('This will not run')
+  })
+})
+```
+
+---
+
+## 5. 🔹 Introduction to Chai Assertions
+
+Cypress includes the **Chai assertion library** by default.
+
+Assertion styles:
+
+* **Should (BDD)** → natural language style.
+* **Expect (BDD)** → flexible, chainable style.
+* **Assert (TDD)** → classic assertion style.
+
+### ✅ Examples
+
+```javascript
+// Should
+cy.get('#username').should('be.visible')
+
+// Expect
+expect([1, 2, 3]).to.have.length(3)
+
+// Assert
+assert.equal(4, 2+2, 'Values are equal')
+```
+
+---
+
+## 6. 🔹 Implicit vs Explicit Assertions
+
+### Implicit Assertion
+
+* Uses `.should()` and `.and()`.
+* Automatically applies to the subject of the previous command.
+
+```javascript
+cy.get('h1')
+  .should('be.visible')
+  .and('contain', 'Welcome')
+```
+
+### Explicit Assertion
+
+* Uses `expect()` or `assert()`.
+* Requires explicitly passing the subject.
+
+```javascript
+const user = { name: 'John', age: 25 }
+expect(user).to.deep.equal({ name: 'John', age: 25 })
+assert.isObject(user, 'User is an object')
+```
+
+---
+
+## 7. 🖥️ Hands-on Demo: Writing Tests with Assertions
+
+### Test Case 1 – Title Verification
+
+```javascript
+describe('Title Test', () => {
+  it('should verify the page title', () => {
+    cy.visit('https://example.cypress.io')
+    cy.title().should('include', 'Cypress')  // implicit assertion
+  })
+})
+```
+
+### Test Case 2 – Explicit Assertion Example
+
+```javascript
+describe('Explicit Assertion Example', () => {
+  it('should validate user object', () => {
+    const user = { username: 'testUser', role: 'admin' }
+    expect(user).to.have.property('role').to.equal('admin')
+  })
+})
+```
+
+### Test Case 3 – Using Hooks + Assertions
+
+```javascript
+describe('Login Form Test', () => {
+  beforeEach(() => {
+    cy.visit('https://example.cypress.io/commands/actions')
+  })
+
+  it('should type into an input field', () => {
+    cy.get('.action-email')
+      .type('test@example.com')
+      .should('have.value', 'test@example.com')
+  })
+})
+```
+
+---
+
+## 8. 📚 Assignment
+
+1. Create a test suite **"Form Tests"**.
+2. Inside the suite, write 2 test cases:
+
+   * Test 1: Visit a page and check if the title contains `"Cypress"`.
+   * Test 2: Use `cy.get()` to type text in an input box and validate its value.
+3. Use `beforeEach()` hook to visit the page before each test.
+4. Add **one implicit assertion** and **one explicit assertion** in your tests.
+5. Use `.only` to run one test at a time, then remove it to run the full suite.
+
+✅ **Deliverable:** Push your Cypress project with the new test suite `formTests.cy.js` inside `cypress/e2e` folder.
+
+---
+
+
