@@ -1,3 +1,69 @@
+
+# 📑 Cypress Training – Table of Contents
+
+* **[Part 1: Introduction & Setup](#-session-1-introduction--setup)**
+
+  * [Learning Objectives](#-learning-objectives-1)
+  * [Agenda](#-agenda-1)
+  * [Introduction to Cypress](#-introduction-to-cypress)
+  * [Benefits & Features](#-benefits--features-of-cypress)
+  * [Cypress vs Selenium](#-cypress-vs-selenium)
+  * [System Requirements & Installation](#-system-requirements--installation)
+  * [Cypress Test Runner Overview](#-cypress-test-runner-overview)
+  * [Hands-on Demo: Running First Test](#️-hands-on-demo-running-first-test)
+  * [Assignment](#-assignment-1)
+
+* **[Part 2: Cypress Architecture & Folder Structure](#-session-2-cypress-architecture--folder-structure)**
+
+  * [Learning Objectives](#-learning-objectives-2)
+  * [Agenda](#-agenda-2)
+  * [Cypress Architecture](#-cypress-architecture)
+  * [Cypress Components Explained](#-cypress-architecture-diagram)
+  * [Cypress vs Selenium (Architecture View)](#-cypress-vs-selenium-architecture-view)
+  * [Cypress Folder Structure](#-cypress-folder-structure)
+  * [Configuration Files](#-configuration-files)
+  * [Hands-on Demo: Customizing Configuration](#️-hands-on-demo-customizing-configuration)
+  * [Assignment](#-assignment-2)
+
+* **[Part 3: Writing Tests with Mocha & Chai](#-session-3-writing-tests-with-mocha--chai)**
+
+  * [Learning Objectives](#-learning-objectives-3)
+  * [Agenda](#-agenda-3)
+  * [Introduction to Mocha in Cypress](#-introduction-to-mocha-in-cypress)
+  * [Test Structure: describe() and it()](#-test-structure-describe-and-it)
+  * [Mocha Hooks](#-mocha-hooks)
+  * [Selective Test Execution](#-selective-test-execution)
+  * [Introduction to Chai Assertions](#-introduction-to-chai-assertions)
+  * [Implicit vs Explicit Assertions](#-implicit-vs-explicit-assertions)
+  * [Hands-on Demo: Writing Tests with Assertions](#️-hands-on-demo-writing-tests-with-assertions)
+  * [Assignment](#-assignment-3)
+
+* **[Part 4: Locators & Web Element Interactions](#-session-4-locators--web-element-interactions)**
+
+  * [Learning Objectives](#-learning-objectives-4)
+  * [Agenda](#-agenda-4)
+  * [Locators in Cypress](#-locators-in-cypress)
+  * [cy.get() vs cy.find()](#-cyget-vs-cyfind)
+  * [Web Element Interactions](#-web-element-interactions)
+  * [Navigation Commands](#-navigation-commands)
+  * [Hands-on Demos](#️-hands-on-demos)
+  * [Assignment](#-assignment-4)
+
+* **[Part 5: Screenshots, Videos & Reporting](#-session-5-screenshots-videos--reporting)**
+
+  * [Learning Objectives](#-learning-objectives-5)
+  * [Agenda](#-agenda-5)
+  * [Capturing Screenshots](#-capturing-screenshots)
+  * [Video Recording in Cypress](#-video-recording-in-cypress)
+  * [Configuring Screenshots & Videos](#-configuring-screenshots--videos)
+  * [Reporting with Mochawesome](#-reporting-with-mochawesome)
+  * [Real-Time Use Cases](#-real-time-use-cases)
+  * [Hands-on Demos](#️-hands-on-demos-1)
+  * [Assignment](#-assignment-5)
+
+---
+
+
 # 📘 Cypress Training - Part 1
 
 **Topic:** Introduction & Setup
