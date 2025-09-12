@@ -617,6 +617,8 @@ assert.equal(4, 2+2, 'Values are equal')
 * Uses `.should()` and `.and()`.
 * Automatically applies to the subject of the previous command.
 
+url - https://docs.cypress.io/app/references/assertions#__docusaurus_skipToContent_fallback
+
 ```javascript
 cy.get('h1')
   .should('be.visible')
