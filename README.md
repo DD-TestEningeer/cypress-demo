@@ -875,3 +875,228 @@ describe('Navigation Test', () => {
 ---
 
 
+# 📘 Cypress Training – Part 5
+
+**Topic:** Screenshots, Videos & Reporting
+
+---
+
+## 🎯 Learning Objectives
+
+By the end of this session, learners will be able to:
+
+* Capture screenshots (full page and element-specific) in Cypress.
+* Understand Cypress’ built-in video recording feature.
+* Configure Cypress to enable/disable screenshots and videos.
+* Generate test execution reports using **Mochawesome**.
+* Apply these features in real-time use cases (e.g., debugging failed tests, reporting to stakeholders).
+
+---
+
+## 📝 Agenda
+
+1. Capturing Screenshots
+2. Video Recording in Cypress
+3. Configuring Screenshots & Videos
+4. Reporting with Mochawesome
+5. Real-Time Use Case Scenarios
+6. Hands-on Demos
+7. Assignment
+
+---
+
+## 1. 🔹 Capturing Screenshots
+
+Cypress allows two types of screenshots:
+
+* **Manual screenshots** (using `cy.screenshot()`).
+* **Automatic screenshots** (captured on failure by default).
+
+### ✅ Example 1 – Full Page Screenshot
+
+```javascript
+describe('Screenshot Example', () => {
+  it('should capture full page screenshot', () => {
+    cy.visit('https://example.cypress.io')
+    cy.screenshot('homepage-full')  // stored under /cypress/screenshots/
+  })
+})
+```
+
+### ✅ Example 2 – Element Screenshot
+
+```javascript
+describe('Element Screenshot Example', () => {
+  it('should capture screenshot of a button', () => {
+    cy.visit('https://example.cypress.io/commands/actions')
+    cy.get('.action-btn').screenshot('action-button')
+  })
+})
+```
+
+📌 **Output Location:** `cypress/screenshots/`
+
+---
+
+## 2. 🔹 Video Recording in Cypress
+
+* Cypress **records videos automatically** when tests run via CLI (`cypress run`).
+* Videos are saved in `cypress/videos/`.
+* By default, Cypress **compresses videos** and only saves them when there is at least one failing test.
+
+### ✅ Running Tests with Video Recording
+
+```bash
+npx cypress run
+```
+
+📌 Cypress will:
+
+* Execute all tests in headless mode (Electron by default).
+* Record video of the test execution.
+* Save video to `cypress/videos/`.
+
+---
+
+## 3. 🔹 Configuring Screenshots & Videos
+
+Modify `cypress.config.js`:
+
+```javascript
+const { defineConfig } = require("cypress");
+
+module.exports = defineConfig({
+  e2e: {
+    baseUrl: "https://example.cypress.io",
+    screenshotsFolder: "cypress/screenshots",
+    videosFolder: "cypress/videos",
+    screenshotOnRunFailure: true,   // capture screenshot on test failure
+    video: true,                    // enable video recording
+    videoCompression: 32            // compress videos (default 32)
+  }
+});
+```
+
+👉 To disable video capture:
+
+```javascript
+video: false
+```
+
+---
+
+## 4. 🔹 Reporting with Mochawesome
+
+Cypress uses **Mocha under the hood**, so we can use Mocha reporters like **Mochawesome**.
+
+### ✅ Step 1: Install Mochawesome
+
+```bash
+npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator
+```
+
+### ✅ Step 2: Update `package.json` test script
+
+```json
+"scripts": {
+  "test": "cypress run --reporter mochawesome"
+}
+```
+
+### ✅ Step 3: Merge JSON Reports
+
+```bash
+npx mochawesome-merge cypress/reports/*.json > mochawesome.json
+```
+
+### ✅ Step 4: Generate HTML Report
+
+```bash
+npx marge mochawesome.json
+```
+
+📌 Report saved in `/mochawesome-report/` → open `index.html`.
+
+---
+
+## 5. 🔹 Real-Time Use Cases
+
+### Use Case 1 – Debugging Failed Tests
+
+* A login test fails due to wrong selector.
+* Cypress automatically captures **screenshot + video**.
+* QA reviews logs and visuals → quickly identifies broken selector.
+
+### Use Case 2 – Sharing Test Evidence with Stakeholders
+
+* After regression suite execution, Cypress generates **Mochawesome HTML report**.
+* Attach report in CI/CD pipeline or email to stakeholders.
+* Screenshots & videos provide clear evidence of failures.
+
+### Use Case 3 – CI/CD Integration (e.g., Jenkins, GitHub Actions)
+
+* Run Cypress in **headless mode** in CI.
+* Collect **screenshots, videos, and Mochawesome reports**.
+* Publish results as part of build artifacts → ensures transparency.
+
+---
+
+## 6. 🖥️ Hands-on Demos
+
+### Demo 1 – Capture Screenshot on Failure
+
+```javascript
+describe('Failure Screenshot Demo', () => {
+  it('should fail and capture screenshot', () => {
+    cy.visit('https://example.cypress.io')
+    cy.get('#non-existing-element').should('be.visible') // this will fail
+  })
+})
+```
+
+📌 Result: Cypress captures screenshot automatically in `/screenshots/`.
+
+---
+
+### Demo 2 – Video Recording of Test Execution
+
+```bash
+npx cypress run --spec "cypress/e2e/login.cy.js"
+```
+
+📌 Result: Cypress saves a video recording in `/videos/`.
+
+---
+
+### Demo 3 – Generate Mochawesome Report
+
+```bash
+npm run test
+npx mochawesome-merge cypress/reports/*.json > mochawesome.json
+npx marge mochawesome.json
+```
+
+📌 Open `mochawesome-report/index.html` in browser.
+
+---
+
+## 7. 📚 Assignment
+
+1. Modify `cypress.config.js` to:
+
+   * Enable video recording.
+   * Enable screenshot on failure.
+2. Write a test suite:
+
+   * Test 1: Visit [https://example.cypress.io](https://example.cypress.io) and take a full-page screenshot.
+   * Test 2: Automate a form → fail it intentionally (e.g., wrong locator) to trigger screenshot + video.
+3. Install and configure **Mochawesome**.
+4. Run tests, generate **Mochawesome HTML report**.
+
+✅ **Deliverable:** Push your project with:
+
+* Cypress config changes.
+* New test suite (`reportingTests.cy.js`).
+* Generated Mochawesome report (`/mochawesome-report/`).
+
+---
