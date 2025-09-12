@@ -162,5 +162,227 @@ describe('My First Cypress Test', () => {
 
 ✅ **Deliverable:** Push your Cypress project to GitHub with the new test file in the `cypress/e2e` folder.
 
+
+# 📘 Cypress Training – Session 2
+
+**Topic:** Cypress Architecture & Folder Structure
+
 ---
+
+## 🎯 Learning Objectives
+
+By the end of this session, learners will be able to:
+
+* Understand the Cypress architecture and how it differs from Selenium.
+* Learn the internal components of Cypress (Node.js server, Test Runner, Browser, Proxy, File System, Plugins).
+* Understand the Cypress folder structure and configuration files.
+* Customize configuration for test execution.
+
+---
+
+## 📝 Agenda
+
+1. Cypress Architecture
+2. Cypress Components Explained
+3. Cypress vs Selenium (Architecture View)
+4. Cypress Folder Structure
+5. Configuration Files (`cypress.config.js`)
+6. Hands-on Demo: Customizing Configuration
+7. Assignment
+
+---
+
+## 1. 🔹 Cypress Architecture
+
+Unlike Selenium, Cypress **runs directly in the browser** and shares the same event loop as the application under test.
+
+### Key Components:
+
+1. **Node.js Server Process**
+
+   * Acts as the backbone of Cypress.
+   * Handles OS-level tasks: reading/writing files, network operations, plugins.
+
+2. **Test Runner (GUI)**
+
+   * Visual interface where tests execute.
+   * Provides real-time results, command log, snapshots, debugging tools.
+
+3. **Browser**
+
+   * Tests run **inside the browser** (not outside like Selenium WebDriver).
+   * Direct execution gives faster and more reliable results.
+
+4. **Network Proxy**
+
+   * Intercepts and modifies network requests/responses.
+   * Allows stubbing, mocking, simulating network failures.
+
+5. **File System Access**
+
+   * Directly reads/writes files.
+   * Used for fixtures (test data), screenshots, videos, reports.
+
+6. **API & Plugins**
+
+   * Cypress provides a rich API (`cy.*` commands).
+   * Plugins extend Cypress (e.g., XPath support, reporting).
+
+---
+
+## 2. 🔹 Cypress Architecture Diagram
+
+```
+ ┌─────────────────────────────┐
+ │        Node.js Server       │
+ │ (OS tasks, File, Network)   │
+ └───────────────┬─────────────┘
+                 │
+                 ▼
+ ┌─────────────────────────────┐
+ │       Cypress Test Runner   │
+ │ (Executes Tests, Debugging) │
+ └───────────────┬─────────────┘
+                 │
+                 ▼
+ ┌─────────────────────────────┐
+ │         Browser (AUT)       │
+ │  Cypress runs inside browser │
+ └───────────────┬─────────────┘
+                 │
+                 ▼
+ ┌─────────────────────────────┐
+ │        Network Proxy        │
+ │   Intercept & Stub Calls    │
+ └─────────────────────────────┘
+```
+
+---
+
+## 3. 🔹 Cypress vs Selenium (Architecture View)
+
+| Aspect             | Selenium                          | Cypress                                    |
+| ------------------ | --------------------------------- | ------------------------------------------ |
+| Execution Model    | WebDriver → Commands → Browser    | Directly inside the browser event loop     |
+| Speed              | Slower (extra layer of WebDriver) | Faster (no external driver needed)         |
+| Network Stubbing   | Requires third-party libraries    | Built-in network stubbing/proxy            |
+| File System Access | Limited (via language bindings)   | Direct file system access (fixtures, logs) |
+
+---
+
+## 4. 🔹 Cypress Folder Structure
+
+When Cypress is installed, project structure looks like:
+
+```
+cypress/
+ ├── fixtures/        # Test data (JSON, key-value pairs)
+ ├── integration/     # Test cases (spec files)
+ ├── plugins/         # Event handlers & plugins
+ ├── support/         # Custom commands & reusable functions
+ ├── videos/          # Auto-recorded test run videos
+ ├── screenshots/     # Test failure/screenshot captures
+node_modules/         # Project dependencies
+cypress.config.js     # Cypress configuration
+package.json          # npm dependencies & scripts
+```
+
+---
+
+## 5. 🔹 Configuration Files
+
+### `cypress.config.js` (Cypress v10+)
+
+* Central place to manage Cypress test configuration.
+* Example configuration:
+
+```javascript
+const { defineConfig } = require("cypress");
+
+module.exports = defineConfig({
+  e2e: {
+    baseUrl: "https://example.cypress.io",
+    viewportWidth: 1280,
+    viewportHeight: 720,
+    video: true,
+    retries: 1
+  }
+});
+```
+
+### Common Config Options:
+
+* **baseUrl** → Default URL for `cy.visit()`.
+* **viewportWidth/Height** → Browser size during test.
+* **video/screenshots** → Enable or disable recordings.
+* **retries** → Retry failed tests.
+
+---
+
+## 6. 🖥️ Hands-on Demo: Customizing Configuration
+
+### ✅ Step 1: Open Cypress Config File
+
+```bash
+code cypress.config.js
+```
+
+### ✅ Step 2: Add Custom Config
+
+```javascript
+e2e: {
+  baseUrl: "https://example.cypress.io",
+  viewportWidth: 1024,
+  viewportHeight: 768,
+  video: false
+}
+```
+
+### ✅ Step 3: Run Test with Config
+
+```javascript
+describe('Config Demo', () => {
+  it('should use baseUrl from config', () => {
+    cy.visit('/') // no need to write full URL
+    cy.title().should('include', 'Cypress')
+  })
+})
+```
+
+👉 Notice that `cy.visit('/')` works because `baseUrl` is set.
+
+---
+
+## 7. 📚 Assignment
+
+1. Open your Cypress project.
+2. Update `cypress.config.js` with:
+
+   * `baseUrl: "https://example.cypress.io"`
+   * `viewportWidth: 1200`, `viewportHeight: 800`
+   * `video: false`
+3. Write a test that:
+
+   * Visits the base URL using `cy.visit('/')`.
+   * Verifies that the page title includes `"Cypress"`.
+4. Add a fixture file `user.json` in `fixtures/` with sample login data.
+
+   ```json
+   {
+     "username": "testUser",
+     "password": "testPass"
+   }
+   ```
+5. Print the fixture data inside your test using:
+
+   ```javascript
+   cy.fixture('user').then((user) => {
+     cy.log(user.username)
+   })
+   ```
+
+✅ **Deliverable:** Push updated project with modified config & new fixture to GitHub.
+
+---
+
 
