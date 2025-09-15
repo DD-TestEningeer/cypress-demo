@@ -11,11 +11,13 @@ describe("Locators Demo", () => {
 
     cy.get(".userform").should("be.visible");
 
-    // By Tag Selector
+    // By Tag Selector e.g h1 , input ,button , form
 
     // cy.get("unique_tag").should("be.visible");
 
     // By Attribute Selector
+
+    // cy.get('[data-cy="login-btn"]')
 
     cy.get("input[placeholder='Enter your company']").should("be.visible");
 
