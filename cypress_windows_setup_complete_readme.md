@@ -11,12 +11,8 @@ npm init -y
 # 🚀 Step 2 — Install dependencies
 
 ```powershell
-npm install --save-dev cypress \
-  cypress-mochawesome-reporter \
-  mochawesome mochawesome-merge marge \
-  cypress-terminal-report \
-  fs-extra \
-  cypress-grep
+npm install --save-dev cypress cypress-mochawesome-reporter mochawesome mochawesome-merge marge cypress-terminal-report fs-extra cypress-grep
+
 ```
 
 ---
