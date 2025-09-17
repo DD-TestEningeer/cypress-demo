@@ -1,22 +1,26 @@
+// const { defineConfig } = require("cypress");
+
+// module.exports = defineConfig({
+//   e2e: {
+//     baseUrl: "https://example.com",
+//     viewportWidth: 1280,
+//     viewportHeight: 720,
+
+//     // Optional: tweak timeouts
+//     defaultCommandTimeout: 10000,
+//     pageLoadTimeout: 60000,
+//   },
+// });
+
+
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
   e2e: {
-    setupNodeEvents(on, config) {
-      // implement node event listeners here if needed
-    },
-
-    // Base URL of your app (update if needed)
-    // baseUrl: "http://localhost:3000",
-
-    // ✅ Allow testing with multiple origins
-    experimentalSessionAndOrigin: true,
-
-    // ✅ Helps bypass issues from 3rd-party scripts
-    experimentalModifyObstructiveThirdPartyCode: true,
-
-    // Optional: tweak timeouts
-    defaultCommandTimeout: 10000,
-    pageLoadTimeout: 60000,
-  },
+    screenshotsFolder: "cypress/screenshots",
+    videosFolder: "cypress/videos",
+    screenshotOnRunFailure: true,   // capture screenshot on test failure
+    video: true,                    // enable video recording
+    videoCompression: 32            // compress videos (default 32)
+  }
 });
