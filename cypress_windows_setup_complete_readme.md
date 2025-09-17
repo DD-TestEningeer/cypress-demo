@@ -562,10 +562,5 @@ npm run clean:reports
 
 ---
 
-If you want, I can:
-- generate a ready-to-commit `README.md` file inside your repo with the above contents,
-- create the actual files in your repository structure (I can provide a zip of all files as a code bundle), or
-- add ESLint/Husky + example GitHub Secrets usage in the workflow.
 
-Tell me which of these you'd like next.
 
